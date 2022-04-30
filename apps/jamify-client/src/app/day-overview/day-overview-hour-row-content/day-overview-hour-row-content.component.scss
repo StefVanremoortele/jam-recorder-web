@@ -1,0 +1,15 @@
+
+:host{
+  display: flex;
+  gap: 1em;
+  width: 100%;
+  // justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.audioclip-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .3em;
+}

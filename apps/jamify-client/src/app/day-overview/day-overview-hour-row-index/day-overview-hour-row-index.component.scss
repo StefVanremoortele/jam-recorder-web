@@ -1,0 +1,18 @@
+:host {
+  padding: 0.5em;
+  background-color: aquamarine;
+  box-sizing: content-box;
+  align-content: center;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2em;
+  min-width: 2em;
+}
+:host-context(.bold) {
+  font-weight: bolder;
+}
+:host-context(.grey) {
+  background-color: rgb(187, 221, 210);
+}

@@ -12,4 +12,9 @@ export class AppController {
   getData(): Message {
     return this.appService.getData();
   }
+
+  @Get('directories')
+  getDirectotires(): any {
+    return this.appService.getDirectories();
+  }
 }

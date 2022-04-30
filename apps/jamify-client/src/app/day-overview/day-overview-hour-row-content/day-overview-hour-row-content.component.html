@@ -1,0 +1,5 @@
+<span *ngFor="let audioclip of audioclips" class="audioclip-wrapper">
+  <button mat-flat-button (click)="play('http://localhost:3000/' + audioclip.path + audioclip.filename)">
+  <mat-icon>play_circle</mat-icon> {{audioclip.filename}}
+  </button>
+</span>

@@ -1,0 +1,12 @@
+.list-wrapper {
+  & > ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    // gap: 1em;
+    height: 100%;
+    & > li {
+      border: 1px solid lightgrey;
+    }
+  }
+}

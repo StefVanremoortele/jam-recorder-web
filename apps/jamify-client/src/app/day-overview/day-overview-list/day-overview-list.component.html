@@ -1,0 +1,9 @@
+<div class="list-wrapper">
+  <h2>{{day | date: 'fullDate'}}</h2>
+  <ul>
+    <!-- <li *ngFor="let item of items" [class.bold]="!(item.hour % 12)"> -->
+    <li *ngFor="let data of items" [class.bold]="!(data.hour % 12)" [class.grey]="!(data.hour % 2)">
+      <jamify-day-overview-hour-row [data]="data"></jamify-day-overview-hour-row>
+    </li>
+  </ul>
+</div>

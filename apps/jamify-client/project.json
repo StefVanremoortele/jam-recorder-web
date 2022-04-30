@@ -6,7 +6,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/jamify-client",
         "index": "apps/jamify-client/src/index.html",
@@ -18,7 +20,10 @@
           "apps/jamify-client/src/favicon.ico",
           "apps/jamify-client/src/assets"
         ],
-        "styles": ["apps/jamify-client/src/styles.scss"],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+          "apps/jamify-client/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -86,7 +91,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/jamify-client"],
+      "outputs": [
+        "coverage/apps/jamify-client"
+      ],
       "options": {
         "jestConfig": "apps/jamify-client/jest.config.ts",
         "passWithNoTests": true
