@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "projects": {
+    "api": "apps/api",
+    "api-interfaces": "libs/api-interfaces",
+    "jamify-client": "apps/jamify-client",
+    "jamify-client-e2e": "apps/jamify-client-e2e"
+  }
+}

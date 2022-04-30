@@ -1,0 +1,28 @@
+{
+  "root": "apps/jamify-client-e2e",
+  "sourceRoot": "apps/jamify-client-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/jamify-client-e2e/cypress.json",
+        "devServerTarget": "jamify-client:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "jamify-client:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/jamify-client-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["jamify-client"]
+}
