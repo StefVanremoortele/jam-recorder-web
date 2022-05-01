@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Message } from '@jamify/api-interfaces';
 import { promises as fs } from 'fs';
+import { MongoClient } from 'mongodb';
+
 import * as path from 'path';
 import * as _ from 'lodash';
 
@@ -24,6 +26,38 @@ export class AppService {
   getData(): Message {
     return { message: 'Welcome to api!' };
   }
+
+  async getAudioclips(day) {
+    const url = 'mongodb://stef:Pass123@localhost/jamify?authSource=admin';
+    const db = await MongoClient.connect(url);
+    const cursor = await db.db().collection('audioclips').find({ startTime: { $gte: day } });
+    return cursor.toArray()
+  }
+
+  async getAudioclipsPerHour(day) {
+    const url = 'mongodb://stef:Pass123@localhost/jamify?authSource=admin';
+    const db = await MongoClient.connect(url);
+    return db.db().collection('audioclips').aggregate([
+      { "$match": { "startTime": { "$gte": day } } },
+      {
+        $group: {
+          _id: {
+            hour: { $substr: ["$startTime", 11, 2] },
+          },
+          filename: { $push: "$filename" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          hour: "$_id.hour",
+          audioclips: "$filename",
+        }
+      },
+      { $sort: { hour: 1 } }
+    ]).toArray();
+  }
+
   async getDirectories(): Promise<any> {
     const dir_path = '/home/stef/audioclips/';
     const days_list = await fs.readdir(dir_path);
@@ -47,9 +81,9 @@ export class AppService {
       const hour_res = []
       for (const hour of listing) {
         const hour_listing = await fs.readdir(`${dir_path}/${day}/${hour}`);
-        hour_res.push({ hour, items: hour_listing.map(hl => ({filename: hl, path: `${day}/${hour}/`})) })
+        hour_res.push({ hour, items: hour_listing.map(hl => ({ filename: hl, path: `${day}/${hour}/` })) })
       }
-      res = res.concat({day, items: hour_res})
+      res = res.concat({ day, items: hour_res })
     }
 
 
