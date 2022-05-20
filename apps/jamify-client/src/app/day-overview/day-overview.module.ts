@@ -23,6 +23,12 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatButtonModule,
   ],
-  exports: [DayOverviewListComponent],
+  exports: [
+    DayOverviewListComponent,
+    DayOverviewHourRowComponent,
+    DayOverviewHourRowIndexComponent,
+    DayOverviewHourRowContentComponent,
+    DayOverviewHourAudioclipCardComponent
+  ],
 })
 export class DayOverviewModule { }

@@ -5,16 +5,15 @@ import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DirlistModule } from './dirlist/dirlist.module';
 import { DayOverviewModule } from './day-overview/day-overview.module';
+import { AudioclipComponent } from './audioclip/audioclip.component';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
+  declarations: [AppComponent, NxWelcomeComponent, AudioclipComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    DirlistModule,
     DayOverviewModule,
   ],
   providers: [],

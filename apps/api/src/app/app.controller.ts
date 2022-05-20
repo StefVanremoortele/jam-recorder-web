@@ -17,4 +17,10 @@ export class AppController {
   getDirectotires(): any {
     return this.appService.getDirectories();
   }
+
+
+  // @Get('audioclips')
+  // getAudioclips(): any {
+  //   return this.appService.getAudioclipsPerHour('2022-04-30');
+  // }
 }

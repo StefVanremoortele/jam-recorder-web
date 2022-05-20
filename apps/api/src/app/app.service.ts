@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Message } from '@jamify/api-interfaces';
 import { promises as fs } from 'fs';
-import { MongoClient } from 'mongodb';
+import { MongoClient, Db } from 'mongodb';
 
 import * as path from 'path';
 import * as _ from 'lodash';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Audioclip, AudioclipDocument } from './audioclip/schemas/audioclip-schema';
 
 
 
@@ -22,22 +25,27 @@ async function walk(dir) {
 }
 
 @Injectable()
-export class AppService {
+export class AppService implements OnModuleInit {
+  db: Db;
+
+  constructor() { }
+
+  async onModuleInit() {
+    const DB_CONNECTION_STRING = 'mongodb://stef:Pass123@localhost/jamify?authSource=admin';
+    this.db = await (await MongoClient.connect(DB_CONNECTION_STRING)).db();
+  }
+
   getData(): Message {
     return { message: 'Welcome to api!' };
   }
 
   async getAudioclips(day) {
-    const url = 'mongodb://stef:Pass123@localhost/jamify?authSource=admin';
-    const db = await MongoClient.connect(url);
-    const cursor = await db.db().collection('audioclips').find({ startTime: { $gte: day } });
-    return cursor.toArray()
+    return this.db.collection('audioclips').find({ startTime: { $gte: day } });
+    // return cursor.toArray()
   }
 
   async getAudioclipsPerHour(day) {
-    const url = 'mongodb://stef:Pass123@localhost/jamify?authSource=admin';
-    const db = await MongoClient.connect(url);
-    return db.db().collection('audioclips').aggregate([
+    return this.db.collection('audioclips').aggregate([
       { "$match": { "startTime": { "$gte": day } } },
       {
         $group: {
@@ -85,12 +93,6 @@ export class AppService {
       }
       res = res.concat({ day, items: hour_res })
     }
-
-
-    // const res = await walk('./apps/api/src/assets/clips/');
-    // var grouped = _.mapValues(_.groupBy(res, 'folder'),
-    //   clist => clist.map(f => _.omit(f, 'folder')));
-    // console.log(listing[0].hours)
     return res;
   }
 }
